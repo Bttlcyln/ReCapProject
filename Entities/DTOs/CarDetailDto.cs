@@ -1,13 +1,14 @@
-﻿using Core.Entites;
+﻿
+using Core.Entites;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Concrete
+namespace Entities.DTOs
 {
-    public class Car:IEntity
+    public class CarDetailDto :IDto
     {
         public int CarId { get; set; }
         public string CarName { get; set; }
@@ -16,7 +17,6 @@ namespace Entities.Concrete
         public int ModelYear { get; set; }
         public int DailyPrice { get; set; }
         public string Description { get; set; }
-
-
+        
     }
 }
