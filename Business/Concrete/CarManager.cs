@@ -21,6 +21,18 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
+        IBrandDal _brandDal;
+
+        public CarManager(IBrandDal brandDal)
+        {
+            _brandDal = brandDal;
+        }
+        IColorDal _colorDal;
+
+        public CarManager(IColorDal colorDal)
+        {
+            _colorDal = colorDal;
+        }
 
         public IResult Add(Car car)
         {
@@ -37,24 +49,24 @@ namespace Business.Concrete
         {
             if (DateTime.Now.Hour==22)
             {
-                return new ErrorDataResult();
+                return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
             }
-           return new SuccesDataResult<List<Car>>(_carDal.GetAll(),true,"Araba listelendi");
+           return new SuccesDataResult<List<Car>>(_carDal.GetAll(),Messages.CarListed);
         }
 
-        public List<CarDetailDto> GetCarDetails()
+        public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            return _carDal.GetCarDetails();
+            return new SuccesDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
         }
 
-        public List<Car> GetCarsByBrandId(int id)
+        public IDataResult<Brand> GetCarsByBrandId(int brandId)
         {
-            return _carDal.GetAll(p=>p.BrandId==id);
+            return new SuccesDataResult<Brand>(_brandDal.Get(p => p.BrandId==brandId));
         }
 
-        public List<Car> GetCarsByColorId(int id)
+        public IDataResult<Color> GetCarsByColorId(int colorId)
         {
-            return _carDal.GetAll(p => p.ColorId == id);
+            return new SuccesDataResult<Color>(_colorDal.Get(p => p.ColorId ==colorId));
         }
     }
 }
