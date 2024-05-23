@@ -1,7 +1,6 @@
 ﻿using Core.EntityFramework;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFrameworkCar
 {
-    public class EfRentalDal : EfEntityRepositoryBase<Rental, ReCapContext>, IRentalDal
+    public class EfUserDal:EfEntityRepositoryBase<User,ReCapContext>,IUserDal
     {
-        public List<RentalDetailDto> GetRentalDetails()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
