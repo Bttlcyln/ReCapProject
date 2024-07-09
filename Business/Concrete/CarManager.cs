@@ -1,6 +1,9 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
@@ -34,7 +37,9 @@ namespace Business.Concrete
             _colorDal = colorDal;
         }
 
+        [SecuredOperation("car.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Add(Car car)
         {
             //business codes
@@ -43,11 +48,24 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarAdded);
         }
 
+        [TransactionScopeAspect]
+        public IResult AddTransactionalTest(Car car)
+        {
+           Add(car);
+            if (car.DailyPrice<250)
+            {
+                throw new Exception("");
+            }
+            Add(car);
+            return null;
+        }
+
         public IResult Delete(int carId)
         {
             return new SuccesDataResult<List<Car>>(Messages.CarDeleted);
         }
 
+        [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
             //if (DateTime.Now.Hour == 17)
@@ -68,7 +86,7 @@ namespace Business.Concrete
 
             return new SuccesDataResult<List<Car>>(list, Messages.CarListed);
         }
-
+        [CacheAspect]
         public IDataResult<Car> GetById(int CarId)
         {
             return new SuccesDataResult<Car>(_carDal.Get(p => p.CarId == CarId));
@@ -90,9 +108,12 @@ namespace Business.Concrete
             return new SuccesDataResult<Color>(_colorDal.Get(p => p.ColorId == colorId));
         }
 
+        [ValidationAspect(typeof(Car))]
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Update(Car car)
         {
             return new SuccessResult(Messages.CarUpdated);
         }
+
     }
 }

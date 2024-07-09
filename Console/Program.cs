@@ -52,14 +52,14 @@ static void BrandTest()
     }
 }
 
-static void UserTest()
-{
-    UserManager userManager = new UserManager(new EfUserDal());
-    foreach (var user in userManager.GetAll())
-    {
-        Console.WriteLine(user.UserFirstName + user.UserLastName);
-    }
-}
+//static void UserTest()
+//{
+//    UserManager userManager = new UserManager(new EfUserDal());
+//    foreach (var user in userManager.GetAll())
+//    {
+//        Console.WriteLine(user.FirstName + user.LastName);
+//    }
+//}
 
 static void CustomerTest()
 {
