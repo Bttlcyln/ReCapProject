@@ -42,7 +42,7 @@ namespace Business.Concrete
 
         public Customer GetById(int customerId)
         {
-            return _customerDal.Get(c=>c.CustomerUserId==customerId);
+            return _customerDal.Get(c=>c.UserId==customerId);
         }
 
         public IResult Update(Customer customer)

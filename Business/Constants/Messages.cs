@@ -18,9 +18,11 @@ namespace Business.Constants
         public static string BrandAdded = "Marka eklendi";
         public static string BrandDeleted = "Marka silindi";
         public static string BrandUpdated = "Marka güncellendi";
+        public static string BrandListed = "Marka Listelendi";
         public static string ColorAdded = "Renk eklendi";
         public static string ColorDeleted = "Renk silindi";
         public static string ColorUpdated = "Renk Güncellendi";
+        public static string ColorListed = "Renk Listelendi";
         public static string CustomerAdded = "Müşteri eklendi";
         public static string CustomerDeleted = "Müşteri silindi";
         public static string CustomeUpdated = "Müşteri güncellendi";
@@ -43,5 +45,8 @@ namespace Business.Constants
         public static string CarImageDeleted = "Araba resmi silindi.";
         public static string CarImageNotFound = "Araba resmi bulunamadı.";
         public static string AuthorizationDenied = "Yetkiniz yok";
+        public static string FileNotFound = "Dosya bulunamadı";
+
+        public static string CarImageLimitexceded = "Araba resmi limiti";
     }
 }

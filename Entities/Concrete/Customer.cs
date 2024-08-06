@@ -11,7 +11,8 @@ namespace Entities.Concrete
     [Keyless]
     public class Customer:IEntity
     {
-        public int CustomerUserId { get; set; }
+        public int Id { get; set; }
+        public int UserId { get; set; }
         public string CompanyName { get; set; }
     }
 }

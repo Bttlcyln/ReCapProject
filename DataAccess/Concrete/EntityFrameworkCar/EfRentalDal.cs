@@ -14,7 +14,25 @@ namespace DataAccess.Concrete.EntityFrameworkCar
     {
         public List<RentalDetailDto> GetRentalDetails()
         {
-            throw new NotImplementedException();
+            using (ReCapContext context = new ReCapContext())
+            {
+                var result = from r in context.Rentals
+                             join c in context.Customers
+                             on r.CustomerId equals c.Id
+                             join u in context.Users
+                             on c.UserId equals u.Id
+                             join car in context.Cars
+                             on r.CarId equals car.CarId
+                             join b in context.Brands
+                             on car.BrandId equals b.BrandId
+                             join color in context.Colors
+                             on car.ColorId equals color.ColorId
+                             select new RentalDetailDto { RentalId = r.CarId, BrandName = b.BrandName, ColorName = color.ColorName, 
+                                 FirstName = u.FirstName, LastName = u.LastName, RentDate = r.RentDate, ReturnDate = r.ReturnDate };
+                             return result.ToList();
+            }
+
+
         }
     }
 }
