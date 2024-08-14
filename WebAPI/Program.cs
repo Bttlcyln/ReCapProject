@@ -11,6 +11,7 @@ using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFrameworkCar;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using System.ComponentModel;
 
@@ -25,18 +26,7 @@ builder.Services.AddCors();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//builder.Services.AddSingleton<ICarService, CarManager>();
-//builder.Services.AddSingleton<ICarDal, EfCarDal>();
-//builder.Services.AddSingleton<IRentalService, RentalManager>();
-//builder.Services.AddSingleton<IRentalDal, EfRentalDal>();
-//builder.Services.AddSingleton<IBrandService, BrandManager>();
-//builder.Services.AddSingleton<IBrandDal, EfBrandDal>();
-//builder.Services.AddSingleton<IColorService, ColorManager>();
-//builder.Services.AddSingleton<IColorDal, EfColorDal>();
-//builder.Services.AddSingleton<IUserService, UserManager>();
-//builder.Services.AddSingleton<IUserDal, EfUserDal>();
-//builder.Services.AddSingleton<ICustomerService, CustomerManager>();
-//builder.Services.AddSingleton<ICustomerDal, EfCustomerDal>();
+
 
 
 builder.Host.UseServiceProviderFactory(services => new AutofacServiceProviderFactory())
@@ -77,6 +67,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 
 }
+app.ConfigureCustomExceptionMiddleware();
 
 app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
 

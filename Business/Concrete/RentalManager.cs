@@ -1,4 +1,5 @@
-﻿using Business.Abstract;
+﻿using Azure.Core;
+using Business.Abstract;
 using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -16,20 +17,50 @@ namespace Business.Concrete
     public class RentalManager : IRentalService
     {
         IRentalDal _rentalDal;
+        ICarDal _carDal;
 
-        public RentalManager(IRentalDal rentalDal)
+        public RentalManager(IRentalDal rentalDal, ICarDal cardal)
         {
             _rentalDal = rentalDal;
+            _carDal = cardal;
         }
 
         public IResult Add(Rental rental)
         {
-            _rentalDal.Add(rental);
 
-            return new SuccessResult();
+            Car car = _carDal.Get(c => c.Id == rental.CarId);
+            if (car == null)
+            {
+                return new ErrorResult(Messages.CarNotFound);
+            }       
+
+            var rentals = _rentalDal.GetAll(r => r.CarId == rental.CarId).OrderByDescending(r => r.RentDate).FirstOrDefault(); ;
+
+            if (rentals != null)
+            {
+
+                if (rentals.ReturnDate > rental.RentDate)
+                {
+                    return new ErrorResult(Messages.CarWasRentedByElse);
+                }
+
+                _rentalDal.Add(rental);
+                return new SuccessResult(Messages.RentalAdded);
+
+            }
+            try
+            {
+                _rentalDal.Add(rental);
+                return new SuccessResult(Messages.RentalAdded);
+            }
+            catch
+            {
+
+                return new ErrorResult(Messages.RentalNotFound);
+            }
         }
 
-        public IResult Delete(int rentalId)
+        public IResult Delete(Rental rental)
         {
             return new SuccesDataResult<List<Rental>>(Messages.RentalDeleted);
         }
@@ -39,14 +70,16 @@ namespace Business.Concrete
             return new SuccesDataResult<List<Rental>>(_rentalDal.GetAll());
         }
 
-        public IDataResult<Rental> GetById(int rentalId)
+        public IDataResult<List<Rental>> GetRentalsByCarId(int carId)
         {
-            throw new NotImplementedException();
+            var rentals = _rentalDal.GetAll(r => r.CarId == carId);
+            var rentalWithMaxRendDate = rentals.OrderByDescending(r => r.RentDate).FirstOrDefault();
+            return new SuccesDataResult<List<Rental>>(_rentalDal.GetAll(r => r.CarId == carId));
         }
 
         public IDataResult<List<RentalDetailDto>> GetRentalDetail()
         {
-            throw new NotImplementedException();
+            return new SuccesDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails());
         }
 
         public IResult Update(Rental rental)

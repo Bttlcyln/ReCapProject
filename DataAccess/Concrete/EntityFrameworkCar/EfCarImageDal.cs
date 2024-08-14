@@ -18,13 +18,13 @@ namespace DataAccess.Concrete.EntityFrameworkCar
             {
                 var result = from c in context.Cars
                              join ci in context.CarImages
-                             on c.CarId equals ci.CarId
-                             where c.CarId == carId
+                             on c.Id equals ci.CarId
+                             where ci.CarId == carId
                              select new CarsByCarImageDto
                              {
                                  ImagePath = ci.ImagePath,
-                                 Id = ci.CarId,
-                                 CarId = c.CarId,
+                                 Id = ci.Id,
+                                 CarId = c.Id,
                              };
                 return result.ToList();
 

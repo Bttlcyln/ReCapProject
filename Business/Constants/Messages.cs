@@ -48,5 +48,20 @@ namespace Business.Constants
         public static string FileNotFound = "Dosya bulunamadı";
 
         public static string CarImageLimitexceded = "Araba resmi limiti";
+
+        public static string PaymentAdded = "Ödeme işlemi başarıyla tamamlandı";
+        public static string PaymentUpdated = "Ödeme Güncellendi";
+        public static string PaymentDeleted = "Ödeme Silindi";
+        public static string PaymentListed = "Ödeme Listelendi";
+        public static string PayIsSuccesfull = "Ödeme başarılı";
+
+        public static string CarNotFound = "Araba bulunamadı";
+        public static string CarWasRentedByElse = "Araba başkası tarafından kiralandı";
+        public static string RentalNotFound = "Kiralama Kaydı bulunamadı";
+
+
+
+
+
     }
 }

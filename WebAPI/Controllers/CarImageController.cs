@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,6 +44,17 @@ namespace WebAPI.Controllers
         public IActionResult GetImagesByCarId(int carId)
         {
             var result = _carImageService.GetCarsByCarImage(carId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest();
+        }
+
+        [HttpPost("add")]
+        public IActionResult Add(IFormFile file, [FromForm] CarImage carImage)
+        {
+            var result = _carImageService.Add(file, carImage);
             if (result.Success)
             {
                 return Ok(result);

@@ -20,7 +20,7 @@ static void CarTest()
     {
         foreach (var car in list.Data)
         {
-            Console.WriteLine(car.CarName + "/" + car.CarId);
+            Console.WriteLine(car.CarName + "/" + car.Id);
         }
 
     }

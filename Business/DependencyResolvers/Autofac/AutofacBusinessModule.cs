@@ -8,7 +8,6 @@ using Core.Utilities.Interceptors;
 using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFrameworkCar;
-using Microsoft.VisualStudio.TestPlatform.Utilities.Helpers.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,10 +38,17 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
             builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
 
-            builder.RegisterType<FileHelperManager>().As<Core.Utilities.Helpers.FileHelper.IFileHelper>().SingleInstance();
+            builder.RegisterType<CarImageManager>().As<ICarImageService>().SingleInstance();
+            builder.RegisterType<EfCarImageDal>().As<ICarImageDal>().SingleInstance();
 
-            builder.RegisterType<AuthManager>().As<IAuthService>();
-            builder.RegisterType<JwtHelper>().As<ITokenHelper>();
+            builder.RegisterType<PaymentManager>().As<IPaymentService>().SingleInstance();
+            builder.RegisterType<EfPaymentDal>().As<IPaymentDal>().SingleInstance();
+
+            builder.RegisterType<FileHelperManager>().As<IFileHelper>().SingleInstance();
+
+            builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
+
+            builder.RegisterType<JwtHelper>().As<ITokenHelper>().SingleInstance();
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

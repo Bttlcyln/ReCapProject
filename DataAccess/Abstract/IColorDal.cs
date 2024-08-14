@@ -11,6 +11,6 @@ namespace DataAccess.Abstract
 {
     public interface IColorDal:IEntityRepository<Color>
     {
-        List<CarDetailDto> GetByColors(int colorId);
+        //List<CarDetailDto> GetByColors(int colorId);
     }
 }

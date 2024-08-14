@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +27,47 @@ namespace WebAPI.Controllers
                 return Ok(result);
             }
             return BadRequest(result);
+        }
+
+        [HttpGet("getrentaldetails")]
+        public IActionResult GetRentalDetails()
+        {
+            var result = _rentalService.GetRentalDetail();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpPost("add")]
+        public IActionResult Add(Rental rental)
+        {
+            var result = _rentalService.Add(rental);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("update")]
+        public IActionResult Update(Rental rental)
+        {
+            var result = _rentalService.Update(rental);
+            if(result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("delete")]
+        public IActionResult Delete(Rental rental) 
+        {
+            var result = _rentalService.Delete(rental);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+               return BadRequest(result);
         }
     }
 }

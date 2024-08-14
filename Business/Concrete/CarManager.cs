@@ -3,6 +3,7 @@ using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
@@ -68,29 +69,40 @@ namespace Business.Concrete
         [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
-            //if (DateTime.Now.Hour == 17)
-            //{
-            //    return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
-            //}
+           //--FİRST CODE--//
+
+            ////if (DateTime.Now.Hour == 17)
+            ////{
+            ////    return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
+            ////}
 
 
-            List<Car> list = _carDal.GetAll();
+            //List<Car> list = _carDal.GetAll();
 
-            var today = DateTime.Now;
+            //var today = DateTime.Now;
 
-            List<Rental> rentalCarIdList = _rentalDal.GetAll(c => c.RentDate < today && c.ReturnDate > today);
+            //List<Rental> rentalCarIdList = _rentalDal.GetAll(c => c.RentDate < today && c.ReturnDate > today);
 
-            var onlySelectedCarId = rentalCarIdList.Select(c => c.CarId);
+            //var onlySelectedCarId = rentalCarIdList.Select(c => c.CarId);
 
-            list.RemoveAll(c => onlySelectedCarId.Contains(c.CarId));
+            //list.RemoveAll(c => onlySelectedCarId.Contains(c.Id));
 
-            return new SuccesDataResult<List<Car>>(list, Messages.CarListed);
+            //return new SuccesDataResult<List<Car>>(list, Messages.CarListed);
+
+            if (DateTime.Now.Hour == 19)
+            {
+                return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
+            }
+            return new SuccesDataResult<List<Car>>(_carDal.GetAll());
         }
 
-     
+        public IDataResult<CarDetailDto> GetById(int id)
+        {
+            return new SuccesDataResult<CarDetailDto>(_carDal.GetCarDetailById(id));
 
+
+        }
       
-       
 
         public IDataResult<List<CarDetailDto>> GetCarByBrandAndColor(int brandId, int colorId)
         {
@@ -114,14 +126,17 @@ namespace Business.Concrete
             return new SuccesDataResult<List<CarsByColorIdDto>>(_carDal.GetCarsByColorId(colorId));
         }
 
+        //[PerformanceAspect(5)]
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
             return new SuccesDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
         }
 
-        public IDataResult<List<CarDetailDto>> GetCarsByBrandId(int brandId)
+       // [PerformanceAspect(5)]
+        public IDataResult<List<CarsByBrandIdDto>> GetCarsByBrandId(int id)
         {
-            return new SuccesDataResult<List<CarDetailDto>>(_brandDal.GetByBrands(brandId));
+            return new SuccesDataResult<List<CarsByBrandIdDto>>(_carDal.GetCarsByBrandId(id));
+            //return new SuccesDataResult<List<Car>>(_carDal.GetCarsByBrandId(c => c.BrandId==id));
         }
 
         public IDataResult<List<CarsByCarImageDto>> GetCarsByCarImage(int carId)
@@ -129,9 +144,9 @@ namespace Business.Concrete
             return new SuccesDataResult<List<CarsByCarImageDto>>(_carDal.GetCarByCarImages(carId));
         }
 
-        public IDataResult<Color> GetCarsByColorId(int colorId)
+        public IDataResult<List<CarsByColorIdDto>> GetCarsByColorId(int id)
         {
-            return new SuccesDataResult<Color>(_colorDal.Get(p => p.ColorId == colorId));
+            return new SuccesDataResult<List<CarsByColorIdDto>>(_carDal.GetCarsByColorId(id));
         }
 
         [ValidationAspect(typeof(Car))]
@@ -141,19 +156,6 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarUpdated);
         }
 
-        IDataResult<CarDetailDto> ICarService.GetById(int id)
-        {
-            return new SuccesDataResult<CarDetailDto>(_carDal.GetCarDetailById(id));
-        }
-
-        IDataResult<List<Car>> ICarService.GetCarsByBrandId(int id)
-        {
-            return new SuccesDataResult<List<Car>>(_carDal.GetAll(c=> c.BrandId==id));
-        }
-
-        IDataResult<List<Car>> ICarService.GetCarsByColorId(int id)
-        {
-            return new SuccesDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == id));
-        }
+        
     }
 }
