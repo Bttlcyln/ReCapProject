@@ -27,12 +27,18 @@ namespace Business.Concrete
 
         public IResult Add(Rental rental)
         {
-
+            Random random = new Random();
+            int findexScore=random.Next(0, 1901);
             Car car = _carDal.Get(c => c.Id == rental.CarId);
             if (car == null)
             {
                 return new ErrorResult(Messages.CarNotFound);
             }       
+
+            if (findexScore < car.FindexScore)
+            {
+                return new ErrorResult(Messages.FindexScoreInNotEnough);
+            }
 
             var rentals = _rentalDal.GetAll(r => r.CarId == rental.CarId).OrderByDescending(r => r.RentDate).FirstOrDefault(); ;
 

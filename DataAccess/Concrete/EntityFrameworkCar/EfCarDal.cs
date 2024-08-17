@@ -38,6 +38,7 @@ namespace DataAccess.Concrete.EntityFrameworkCar
                                  DailyPrice = car.DailyPrice,
                                  Description = car.Description,
                                  ModelYear = car.ModelYear,
+                                 FindexScore = car.FindexScore,
 
                              };
                 return result.ToList();
@@ -82,6 +83,7 @@ namespace DataAccess.Concrete.EntityFrameworkCar
                                   DailyPrice = car.DailyPrice,
                                   ModelYear = car.ModelYear,
                                   Description = car.Description,
+                                  FindexScore = car.FindexScore
                               }).FirstOrDefault();
                 return result;
 
@@ -114,7 +116,8 @@ namespace DataAccess.Concrete.EntityFrameworkCar
                                  ColorName = cl.ColorName,
                                  ModelYear = car.ModelYear,
                                  DailyPrice = car.DailyPrice,
-                                 Description = car.Description
+                                 Description = car.Description,
+                                 FindexScore = car.FindexScore
 
                              };
                 return result.ToList();

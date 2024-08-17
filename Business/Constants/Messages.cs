@@ -38,6 +38,8 @@ namespace Business.Constants
         public static string SuccessfulLogin = "Başarılı giriş";
         public static string UserAlreadyExists = "Kullanıcı mevcut";
         public static string AccessTokenCreated = "Token oluşturuldu";
+        public static string FindexScoreInNotEnough = "Findex puanınız aracı kiralamak için yetersiz";
+
 
         public static string CarImagesListed = "Arabaya ait resimler listelendi.";
         public static string CarImageAdded = "Araba resmi eklendi.";

@@ -17,6 +17,7 @@ namespace Business.Concrete
     {
         private IUserService _userService;
         private ITokenHelper _tokenHelper;
+        
 
         public AuthManager(IUserService userService, ITokenHelper tokenHelper)
         {
@@ -41,6 +42,7 @@ namespace Business.Concrete
             return new SuccesDataResult<User>(user, Messages.UserRegistered);
         }
 
+        
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {
             var userToCheck = _userService.GetByMail(userForLoginDto.Email);
@@ -72,5 +74,7 @@ namespace Business.Concrete
             var accessToken = _tokenHelper.CreateToken(user, claims);
             return new SuccesDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
         }
+
+       
     }
 }
