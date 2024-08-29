@@ -38,9 +38,9 @@ namespace Business.Concrete
             _colorDal = colorDal;
         }
 
-        [SecuredOperation("car.add,admin")]
+       // [SecuredOperation("car.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
-        [CacheRemoveAspect("ICarService.Get")]
+       // [CacheRemoveAspect("ICarService.Get")]
         public IResult Add(Car car)
         {
             //business codes
@@ -61,8 +61,11 @@ namespace Business.Concrete
             return null;
         }
 
-        public IResult Delete(int Id)
+        public IResult Delete(int carId)
         {
+
+            Car car =_carDal.Get(c=> c.Id == carId);
+            _carDal.Delete(car);
             return new SuccesDataResult<List<Car>>(Messages.CarDeleted);
         }
 
@@ -98,7 +101,7 @@ namespace Business.Concrete
 
         public IDataResult<CarDetailDto> GetById(int id)
         {
-            return new SuccesDataResult<CarDetailDto>(_carDal.GetCarDetailById(id));
+          return new SuccesDataResult<CarDetailDto>(_carDal.GetCarDetailById(id));
 
 
         }
@@ -110,7 +113,7 @@ namespace Business.Concrete
 
             if (cars == null || cars.Count == 0)
             {
-                return new ErrorDataResult<List<CarDetailDto>>();
+                return new SuccesDataResult<List<CarDetailDto>>();
             }
 
             return new SuccesDataResult<List<CarDetailDto>>(cars);
@@ -149,10 +152,11 @@ namespace Business.Concrete
             return new SuccesDataResult<List<CarsByColorIdDto>>(_carDal.GetCarsByColorId(id));
         }
 
-        [ValidationAspect(typeof(Car))]
-        [CacheRemoveAspect("ICarService.Get")]
+       // [ValidationAspect(typeof(Car))]
+       // [CacheRemoveAspect("ICarService.Get")]
         public IResult Update(Car car)
         {
+           _carDal.Update(car);
             return new SuccessResult(Messages.CarUpdated);
         }
 

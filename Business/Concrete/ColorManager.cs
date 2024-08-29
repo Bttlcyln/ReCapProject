@@ -31,7 +31,9 @@ namespace Business.Concrete
 
         public IResult Delete(int colorId)
         {
-            return new SuccesDataResult<List<Color>>(Messages.ColorDeleted);
+            Color color = _colorDal.Get(b => b.ColorId == colorId);
+            _colorDal.Delete(color);
+            return new SuccessResult(Messages.ColorDeleted);
         }
 
         public IDataResult<List<Color>> GetAll()
@@ -39,13 +41,22 @@ namespace Business.Concrete
             return new SuccesDataResult<List<Color>>(_colorDal.GetAll(),Messages.ColorListed);
         }
 
-        public IDataResult<Color> GetById(int colorID)
+        public IDataResult<Color> GetById(int id)
         {
-            return new SuccesDataResult<Color>(_colorDal.Get(c => c.ColorId == colorID));
+           var result = new SuccesDataResult<Color>(_colorDal.Get(b => b.ColorId ==id), Messages.ColorListed);
+            if (result.Data != null)
+            {
+                return result;
+            }
+            else
+            {
+                return new ErrorDataResult<Color>(Messages.ColorIsNull);
+            }
         }
 
         public IResult Update(Color color)
         {
+           _colorDal.Update(color);
             return new SuccessResult(Messages.ColorUpdated);
         }
     }

@@ -19,16 +19,20 @@ namespace Business.Constants
         public static string BrandDeleted = "Marka silindi";
         public static string BrandUpdated = "Marka güncellendi";
         public static string BrandListed = "Marka Listelendi";
+        public static string BrandIdListed = "Id'si girilen marka listelendi";
+        public static string BrandIsNull = "Girilen Id'de bir marka yok";
         public static string ColorAdded = "Renk eklendi";
         public static string ColorDeleted = "Renk silindi";
         public static string ColorUpdated = "Renk Güncellendi";
         public static string ColorListed = "Renk Listelendi";
+        public static string ColorIsNull = "Renk Bulunamadı";
         public static string CustomerAdded = "Müşteri eklendi";
         public static string CustomerDeleted = "Müşteri silindi";
         public static string CustomeUpdated = "Müşteri güncellendi";
         public static string RentalAdded = "Kiralama işlemi eklendi";
         public static string RentalDeleted = "Kiralama işlemi silindi";
         public static string RentalUpdated = "Kiralama işlemi güncellendi";
+        public static string UserListed = "Kullanıcı listelendi";
         public static string UserAdded = "Kullanıcı eklendi";
         public static string UserDeleted = "Kullanıcı silindi";
         public static string UserUpdated = "Kullanıcı güncellendi";
@@ -39,7 +43,10 @@ namespace Business.Constants
         public static string UserAlreadyExists = "Kullanıcı mevcut";
         public static string AccessTokenCreated = "Token oluşturuldu";
         public static string FindexScoreInNotEnough = "Findex puanınız aracı kiralamak için yetersiz";
-
+        public static string UserNotExist = "Kullanici mevcut degil";
+        public static string UserEmailExist = "E-mail zaten kayitli";
+        public static string MailNotFound = "Mail bulunamadı";
+        public static string UserEmailNotAvailable = "Kullanici e-maili gecersiz";
 
         public static string CarImagesListed = "Arabaya ait resimler listelendi.";
         public static string CarImageAdded = "Araba resmi eklendi.";
@@ -61,9 +68,6 @@ namespace Business.Constants
         public static string CarWasRentedByElse = "Araba başkası tarafından kiralandı";
         public static string RentalNotFound = "Kiralama Kaydı bulunamadı";
 
-
-
-
-
+        public static string PasswordChanged = "Parola Değiştirildi";
     }
 }
